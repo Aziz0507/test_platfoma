@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	{% for i in thems %}
+		<a href="{% url 'test' i.id %} ">
+			<input type="button" value="{{i.types}}" name = '{{i.types}}'>
+		</a>
+	{% endfor %}
+</body>
+</html>

@@ -7,6 +7,12 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hello, world!</h1>
+
+    {% for i in thems %}
+    	<a href="{% url 'test' i.id %} ">
+            <input type="button" value="{{i.types}}" name = '{{i.types}}'>
+        </a>
+    {% endfor %}
+
 </body>
 </html>
