@@ -36,5 +36,5 @@ class Test_question(models.Model):
         verbose_name = 'Тест'
         verbose_name_plural = 'Тесты'
     
-    def __str__(self):
-        return f"Категория : {self.test_type}, вопрос : {self.id}"
+    # def __str__(self):
+    #     return f"Категория : {self.test_type}, вопрос : {self.id}"
