@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from .serializers import TestSerializer
 from django.http import JsonResponse
+from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 
 
@@ -29,17 +30,20 @@ class TestApiViews(generics.ListAPIView):
     # print('до функции')
     queryset = Test_question.objects.all()
     serializer_class = TestSerializer
+   
+    # @api_view(['POST', 'GET'])
+
     
     def list(self,request, pk):
-            queryset = self.get_queryset().filter(test_type_id = pk)
-            serializer = TestSerializer(queryset, many=True)
-            return Response(serializer.data)
+        queryset = self.get_queryset().filter(test_type_id = pk)
+        serializer = TestSerializer(queryset, many=True)
+        return Response(serializer.data)
 
-    def post(self, request):
-        data = JSONParser().parse(request)
-        serializer = TestSerializer(data=data)
+
+    def post(self, request, *args, **kwargs):
+        serializer = TestSerializer(data=request.data)
+        
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
-    
+            return Response(serializer.data)
+        
