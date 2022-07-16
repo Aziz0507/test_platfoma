@@ -9,7 +9,7 @@
 <body>
 
     {% for i in thems %}
-    	<a href="{% url 'test' i.id %} ">
+    	<a href="{% url 'Quiz' i.id %} ">
             <input type="button" value="{{i.types}}" name = '{{i.types}}'>
         </a>
     {% endfor %}

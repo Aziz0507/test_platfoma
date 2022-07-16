@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  {% for i in quiz %}
+  <div class="question">
+    <hr>
+    <p class="text-center"><b>{{i.question}}</b></p>
+    <ol>
+      <li><input type="radio" name="quest{{i.id}}" id="a_1"> <label class="form-check-label" for="a_1">{{i.options_A}}</label></li>
+      <li><input type="radio" name="quest{{i.id}}" id="a_2"> <label class="form-check-label" for="a_2">{{i.options_B}}</label></li>
+      <li><input type="radio" name="quest{{i.id}}" id="a_3"> <label class="form-check-label" for="a_3">{{i.options_C}}</label></li>
+      <li><input type="radio" name="quest{{i.id}}" id="a_4"> <label class="form-check-label" for="a_4">{{i.options_D}}</label></li>
+    </ol>
+  </div>
+  {% endfor %}
+
+
+<button class="btn-success btn-lg btn-block" id="apply" onclick="summary();">Получить результат</button>
+
+
+
+<script>
+  console.log('a_{{quiz.answer}}'.length)
+
+
+  function summary() {
+    let count = document.getElementsByClassName('question').length; //Количество вопросов
+    let answers = document.querySelectorAll('.question'); //Все элементы div с вопросами (???)
+    let score = 0; //Количество верных ответов
+    let rightAnswers = ['a_{{iitem}}'.length] //Список верных ответов
+
+    for (let i = 0; i < count; i++) {
+      let chosenAnswer = answers[i].querySelector("input[type='radio']:checked"); //Из массива вопросов выбираем элемент радио, который выбрал пользователь
+      if (chosenAnswer && chosenAnswer.id == rightAnswers[i]) //Думал что будет работать если будет свреять по html разметке, но зря
+      {
+        score++;
+      }
+      console.log("Выбранный ответ: " + chosenAnswer && chosenAnswer.parentNode.textContent);
+      console.log("Правильный ответ: " + rightAnswers[i]);
+      console.log("Очки: " + score);
+    }
+  }
+</script>
+
+
+
+</body>
+</html>

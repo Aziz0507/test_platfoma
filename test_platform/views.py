@@ -47,3 +47,8 @@ class TestApiViews(generics.ListAPIView):
             serializer.save()
             return Response(serializer.data)
         
+
+def Quiz(request, pk):
+    model = Test_question.objects.filter(test_type_id = pk)
+    content = {'quiz': model}
+    return render(request, 'quiz.html', content)
