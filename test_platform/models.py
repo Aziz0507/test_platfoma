@@ -1,5 +1,6 @@
 from tabnanny import verbose
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Catigoriy(models.Model):
@@ -38,3 +39,17 @@ class Test_question(models.Model):
     
     def __str__(self):
         return f"Категория : {self.test_type}, вопрос : {self.id}"
+
+
+class Verifity_Models(models.Model):
+    users        = models.ForeignKey(User,on_delete = models.CASCADE, verbose_name = 'пользователь' )
+    thems        = models.ForeignKey(Test_Types, on_delete = models.CASCADE, verbose_name = 'Тема теста')
+    questions_id = models.ForeignKey(Test_question, on_delete = models.CASCADE, verbose_name = 'ID вопроса')
+    option_user  = models.IntegerField(verbose_name = 'Выбор пользователя')
+
+    class Meta:
+        verbose_name = 'Выбор пользователя'
+        verbose_name_plural = 'Выборы пользователей'
+
+    def __str__(self):
+        return f"Пользователь {self.users}, Вопрос {self.thems}"

@@ -7,3 +7,4 @@ from .models import *
 admin.site.register(Catigoriy)
 admin.site.register(Test_Types)
 admin.site.register(Test_question)
+admin.site.register(Verifity_Models)

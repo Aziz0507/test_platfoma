@@ -7,6 +7,7 @@ from .serializers import TestSerializer
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
+# from .forms import Test_quest_form
 
 
 
@@ -49,6 +50,36 @@ class TestApiViews(generics.ListAPIView):
         
 
 def Quiz(request, pk):
+    # form  = Test_quest_form()
     model = Test_question.objects.filter(test_type_id = pk)
     content = {'quiz': model}
-    return render(request, 'quiz.html', content)
+
+    if request.method == 'POST' and request.is_ajax():
+        asd = request.POST('')
+        if asd.is_validate():
+            asd.save()
+            return render(request, 'quiz.html')
+        else:
+            return JsonResponse(status = 400)
+        
+
+
+
+
+    # return render(request, 'quiz.html', content)
+
+def Answer(request):
+    Verifity = Verifity_Models.objects.all()
+    Quest = Test_question.objects.filter()
+
+    for ver in Verifity:
+        for quest in Quest:
+            if ver.option_user == quest.answer:
+                asd = {'test':'good'}
+                return 'Good'
+            else:
+                asd = {'test':'ill'}
+                return 'ты ошибся'
+
+
+    return render(request, 'answer.html', asd)

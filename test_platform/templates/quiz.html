@@ -9,45 +9,49 @@
     <title>Document</title>
 </head>
 <body>
+  <form method="POST" id ='contentForm'>
   {% for i in quiz %}
-  <div id = "question">
-    <hr>
-    <p class="text-center"><b>{{i.question}}</b></p>
-    <ol data-quiz = '{{i.id}}'>
-      <li><input data-as = '1' type="radio" name="quest{{i.id}}" id="a_1"> <label class="form-check-label" for="a_1">{{i.options_A}} </label></li>
-      <li><input data-as = '2' type="radio" name="quest{{i.id}}" id="a_2"> <label class="form-check-label" for="a_2">{{i.options_B}} </label></li>
-      <li><input data-as = '3' type="radio" name="quest{{i.id}}" id="a_3"> <label class="form-check-label" for="a_3">{{i.options_C}} </label></li>
-      <li><input data-as = '4' type="radio" name="quest{{i.id}}" id="a_4"> <label class="form-check-label" for="a_4">{{i.options_D}} </label></li>
-    </ol>
-  </div>
+    <div id = "question">
+      <hr>
+      <p class="text-center" name = "Question" ><b>{{i.question}}</b></p>
+      <ol data-as = '{{ i.id }}'>
+        <li><input type="radio" name="quest{{i.id}}" class="1"> <label class="form-check-label" for="a_1">{{i.options_A}} </label></li>
+        <li><input type="radio" name="quest{{i.id}}" class="2"> <label class="form-check-label" for="a_2">{{i.options_B}} </label></li>
+        <li><input type="radio" name="quest{{i.id}}" class="3"> <label class="form-check-label" for="a_3">{{i.options_C}} </label></li>
+        <li><input type="radio" name="quest{{i.id}}" class="4"> <label class="form-check-label" for="a_4">{{i.options_D}} </label></li>
+      </ol>
+    </div>
   {% endfor %}
 
 
-<button class="btn-success btn-lg btn-block" id="apply" onclick="summary();">Получить результат</button>
+    <button type='submit'>Получить результат</button>
+  </form>
+
 
 
 <script src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
-{% for  %}
+
 <script>
   
   $(document).ready(function(){
+    $('#contentForm').submit(function(){
+      $.ajax({
+        data:$('input').attr('class'),
 
-    $.getJSON('../urls.py', function(data) {
-    alert(data.text);
-    alert(data.error);
-    });
-
-
-    $('ol').on('click', function(){
-      let questions = $(this).attr('data-quiz')
-      console.log("Quiz: " + questions);
-
-      $('input').on('change', function(){
-        console.log('вопрос '+ $(this).attr('data-as'))
-        // if ($(this).attr('data-as') == )
+        type: $(this).attr('method'),
         
+        url: "{% url 'Answer' %}",
+        
+        success: function (response) {
+          alert("ждите выхода ответов");
+        },
       });
     });
+
+
+      // $('input').on('change', function(){
+        
+      // });
     
   });
     
