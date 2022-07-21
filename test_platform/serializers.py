@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Test_question
+from .models import Test_question, Verifity_Models
 
 
 class TestSerializer(serializers.ModelSerializer):
@@ -19,4 +19,8 @@ class TestSerializer(serializers.ModelSerializer):
         model = Test_question
         fields = '__all__'
 
+class User_Test_Serializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Verifity_Models
+        fields = '__all__'

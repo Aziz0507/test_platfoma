@@ -10,8 +10,12 @@
 </head>
 <body>
   <form method="POST" id ='contentForm'>
+    
+  {% csrf_token %}
+  <!-- <h1>{{quiz.test_type}}</h1> -->
+  
   {% for i in quiz %}
-    <div id = "question">
+    <div id = "question" class = '{{i.test_type}}'>
       <hr>
       <p class="text-center" name = "Question" ><b>{{i.question}}</b></p>
       <ol data-as = '{{ i.id }}'>
@@ -21,7 +25,6 @@
         <li><input type="radio" name="quest{{i.id}}" class="4"> <label class="form-check-label" for="a_4">{{i.options_D}} </label></li>
       </ol>
     </div>
-  {% endfor %}
 
 
     <button type='submit'>Получить результат</button>
@@ -34,13 +37,14 @@
 <script>
   
   $(document).ready(function(){
-    $('#contentForm').submit(function(){
+    $('input').on('change',function(){
       $.ajax({
-        data:$('input').attr('class'),
 
-        type: $(this).attr('method'),
+        data: {'test_type':"{{i.test_type}}", 'answer_user':$(this).attr('class'), 'id_question':'{{i.id}}'},
+
+        type: $("#contentForm").attr('method'),
         
-        url: "{% url 'Answer' %}",
+        url: "http://127.0.0.1:8000/path/quiz/answer/",
         
         success: function (response) {
           alert("ждите выхода ответов");
@@ -54,12 +58,13 @@
       // });
     
   });
+
     
   // function summary() {
   //   let count = document.getElementsByClassName('question').length; //Количество вопросов
   //   let answers = document.querySelectorAll('.question'); //Все элементы div с вопросами (???)
   //   let score = 0; //Количество верных ответов
-  //   let rightAnswers = ['a_{{item.answer}}'] //Список верных ответов
+  //   let rightAnswers = ['a_1'] //Список верных ответов
   //   for (let i = 0; i < count; i++) {
   //     let chosenAnswer = answers[i].querySelector("input[type='radio']:checked"); //Из массива вопросов выбираем элемент радио, который выбрал пользователь
   //     if (chosenAnswer && chosenAnswer.id == rightAnswers[i]) //Думал что будет работать если будет свреять по html разметке, но зря
@@ -72,6 +77,7 @@
   //   }
   // }
 </script>
+{% endfor %}
 
 
 </body>

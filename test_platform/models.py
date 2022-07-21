@@ -42,14 +42,14 @@ class Test_question(models.Model):
 
 
 class Verifity_Models(models.Model):
-    users        = models.ForeignKey(User,on_delete = models.CASCADE, verbose_name = 'пользователь' )
-    thems        = models.ForeignKey(Test_Types, on_delete = models.CASCADE, verbose_name = 'Тема теста')
-    questions_id = models.ForeignKey(Test_question, on_delete = models.CASCADE, verbose_name = 'ID вопроса')
-    option_user  = models.IntegerField(verbose_name = 'Выбор пользователя')
+    user         = models.ForeignKey(User,on_delete = models.CASCADE, verbose_name = 'пользователь' )
+    them         = models.ForeignKey(Test_Types, on_delete = models.CASCADE, verbose_name = 'Тема теста')
+    quiz_id      = models.ForeignKey(Test_question, on_delete = models.CASCADE, verbose_name = 'ID вопроса')
+    answer       = models.IntegerField(verbose_name = 'Выбор пользователя')
 
     class Meta:
         verbose_name = 'Выбор пользователя'
         verbose_name_plural = 'Выборы пользователей'
 
     def __str__(self):
-        return f"Пользователь {self.users}, Вопрос {self.thems}"
+        return f"Пользователь {self.user}, Тема {self.them}, Вопрос {self.quiz_id}"

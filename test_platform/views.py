@@ -1,13 +1,18 @@
+from django import views
 from django.shortcuts import render
 from .models import *
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
-from .serializers import TestSerializer
+from .serializers import TestSerializer, User_Test_Serializer
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import action
 # from .forms import Test_quest_form
+from django.contrib.auth.models import User
+
 
 
 
@@ -47,20 +52,28 @@ class TestApiViews(generics.ListAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+
+class user_test_views(ModelViewSet):
+    queryset         = Verifity_Models.objects.all()
+    serializer_class = User_Test_Serializer
+
+    # @action(method = 'put', detail = False)
+    def update(self, request):
+        objects = self.get_object()
+        serializer = User_Test_Serializer(data = request.data)
+        if serializer.is_valid():
+            objects.update(serializer.validated_data['quest'])
+
         
 
 def Quiz(request, pk):
     # form  = Test_quest_form()
     model = Test_question.objects.filter(test_type_id = pk)
+    users_as = User.objects.all()
     content = {'quiz': model}
+    return render(request, 'quiz.html',content)
 
-    if request.method == 'POST' and request.is_ajax():
-        asd = request.POST('')
-        if asd.is_validate():
-            asd.save()
-            return render(request, 'quiz.html')
-        else:
-            return JsonResponse(status = 400)
+
         
 
 
@@ -72,14 +85,13 @@ def Answer(request):
     Verifity = Verifity_Models.objects.all()
     Quest = Test_question.objects.filter()
 
-    for ver in Verifity:
-        for quest in Quest:
-            if ver.option_user == quest.answer:
-                asd = {'test':'good'}
-                return 'Good'
-            else:
-                asd = {'test':'ill'}
-                return 'ты ошибся'
+    
+    if request.method == 'POST' and request.is_ajax():
+        asd = request.POST('Question')
+        if asd.is_validate():
+            asd.save()
+            return render(request, 'answer.html', asd)
 
+        else:
+            return JsonResponse(status = 400)
 
-    return render(request, 'answer.html', asd)
