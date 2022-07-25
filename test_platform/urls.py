@@ -13,5 +13,5 @@ urlpatterns = [
     path('test-api/<int:pk>', views.TestApiViews.as_view(), name='test-api'),
     path('quiz/<int:pk>', views.Quiz, name = 'Quiz'),
     path('answer', views.Answer, name='Answer'),
-    path('quiz/answer/<int:us>', include(routers.urls), name ='rest-answer'),
+    path('quiz/answer/', include(routers.urls), name ='rest-answer'),
 ]

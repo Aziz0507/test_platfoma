@@ -57,7 +57,6 @@ class user_test_views(ModelViewSet):
     queryset         = Verifity_Models.objects.all()
     serializer_class = User_Test_Serializer
 
-    # @action(method = 'put', detail = False)
     def update(self, request):
         objects = self.get_object()
         serializer = User_Test_Serializer(data = request.data)
