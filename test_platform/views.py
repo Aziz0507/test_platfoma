@@ -5,7 +5,8 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from .serializers import TestSerializer, User_Test_Serializer
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
+
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 from rest_framework.viewsets import ModelViewSet
@@ -26,10 +27,10 @@ def register(request):
     if request.method == "POST":
         form = Register_Form(request.POST)
         if form.is_valid():
-            return 'оуе жизн варам'
-        else:
-            return 'не оуе варам'
-    form = Register_Form()
+            return HttpResponseRedirect('main/')
+    else:
+        form = Register_Form()
+    
     return render (request, "register.html", {"form":form})
 
 
