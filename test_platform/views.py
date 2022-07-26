@@ -12,6 +12,25 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 # from .forms import Test_quest_form
 from django.contrib.auth.models import User
+from .forms import Register_Form
+from django.contrib import messages
+from django.contrib.auth import login
+
+
+
+
+def register(request):
+
+
+
+    if request.method == "POST":
+        form = Register_Form(request.POST)
+        if form.is_valid():
+            return 'оуе жизн варам'
+        else:
+            return 'не оуе варам'
+    form = Register_Form()
+    return render (request, "register.html", {"form":form})
 
 
 
