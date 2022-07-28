@@ -6,33 +6,34 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from .serializers import TestSerializer, User_Test_Serializer
 from django.http import JsonResponse, HttpResponseRedirect
-
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
-# from .forms import Test_quest_form
 from django.contrib.auth.models import User
-from .forms import Register_Form
 from django.contrib import messages
 from django.contrib.auth import login
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
+from .forms import CustomUserCreationForm
 
+# class SignUpView(CreateView):
+#     form_class = CustomUserCreationForm
+#     success_url = reverse_lazy("login")
+#     template_name = "register.html"
 
-
-
-def register(request):
-
-
-
-    if request.method == "POST":
-        form = Register_Form(request.POST)
+def SignUpView(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect('main/')
-    else:
-        form = Register_Form()
-    
-    return render (request, "register.html", {"form":form})
+            try:
+                form.save()
+            except:
+                form.add_error(None, 'Ошибка добавления ползователя')
 
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'register.html', {'form':form})
 
 
 

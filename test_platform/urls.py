@@ -14,5 +14,5 @@ urlpatterns = [
     path('quiz/<int:pk>', views.Quiz, name = 'Quiz'),
     path('answer', views.Answer, name='Answer'),
     path('quiz/answer/', include(routers.urls), name ='rest-answer'),
-    path('reg', views.register, name = 'register'),
+    path('reg/', views.SignUpView, name = 'register'),
 ]
