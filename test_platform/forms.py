@@ -8,4 +8,3 @@ class CustomUserCreationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['email','username','password']
-        # fields = '__all__'

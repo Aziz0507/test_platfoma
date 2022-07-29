@@ -7,10 +7,34 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="post">
+    <form method="POST">
       {% csrf_token %}
       {{ form.as_p }}
       <button type="submit">Sign Up</button>
     </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <script>
+      $(document).ready(function(){
+        $('button').on('click', function(){
+          $.ajax({
+            data: $(this).serialize(),
+            url: "http://127.0.0.1:8000/path/djoser/users",
+            success: function (response) {
+              alert("Спасибо, что обратились к нам ");
+            },
+            error: function (response) {
+              alert(response.responseJSON.errors);
+              alert(response.responseJSON.errors)
+            }
+          });
+        });
+      });
+
+
+
+    </script>
 </body>
 </html>

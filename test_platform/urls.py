@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path, include, re_path
 from . import views
 from rest_framework import routers
 
@@ -15,4 +15,6 @@ urlpatterns = [
     path('answer', views.Answer, name='Answer'),
     path('quiz/answer/', include(routers.urls), name ='rest-answer'),
     path('reg/', views.SignUpView, name = 'register'),
+    path('djoser/', include('djoser.urls'), name = 'djoser'),
+    re_path(r'^auth/', include('djoser.urls.authtoken')),
 ]
